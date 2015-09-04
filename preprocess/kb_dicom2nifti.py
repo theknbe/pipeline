@@ -24,6 +24,7 @@ if __name__ == "__main__":
 	dirList = np.array(glob.glob('*'))
 	
 	#make some new directories
+
 	try:
 		os.mkdir(sessName+'_dicom')
 		os.mkdir(sessName+'_nifti')
@@ -35,11 +36,13 @@ if __name__ == "__main__":
 	niftiDir = sessDir + '/' + sessName + '_nifti'
 
 	#convert dicoms to nifti
+
 	for scan in dirList:
 		print("Converting dicom files in " + scan)
 		subprocess.check_call(['dcm2niix', '-f', scan, '-o', niftiDir, sessDir + '/' + scan])
 
 	#move files
+
 	for scan in dirList:
 		os.chdir(sessDir)
 		subprocess.call(['mv', scan, dicomDir])
