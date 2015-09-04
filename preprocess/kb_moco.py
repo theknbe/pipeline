@@ -28,6 +28,7 @@ if __name__ == "__main__":
         niftiList = np.array(glob.glob('*'))
 
 	#create reference volume from first epi
+	
 	os.chdir(dicomDir)
 	dicomList = np.array(glob.glob('*'))
 	for scan in dicomList:
@@ -50,6 +51,7 @@ if __name__ == "__main__":
 			subprocess.check_call(['mcflirt', '-in', scan, '-refvol', 'refVol.nii', '-report', '-plots'])
 	
 	#extract motion param info
+	
 	mcList = np.array(glob.glob('*'))
 	parList = []
 	for par in mcList:
@@ -58,11 +60,10 @@ if __name__ == "__main__":
 	print parList
 
 	#make empty containers to add the motion params to, for plotting purposes:
-    	#three rotation params:
+    	
     	r1 = np.array([])
     	r2 = np.array([])
     	r3 = np.array([])
-    	#and three translations:
     	t1 = np.array([])
     	t2 = np.array([])
     	t3 = np.array([])
@@ -81,6 +82,7 @@ if __name__ == "__main__":
         	t3 = np.append(t3,MP['T3'])
 
 	#plot and save
+	
 	fig = plt.figure()
     	ax1 = fig.add_subplot(2,1,1)
     	ax1.plot(t1)
@@ -95,11 +97,11 @@ if __name__ == "__main__":
     	ax2.set_xlabel('Time (TR)')
     	fig.savefig(sessName + '_motionParams.png')
     	os.system('open ' + sessName + '_motionParams.png')
-
-    	p = np.column_stack((t1,t2,t3,r1,r2,r3))
+    	p = np.column_stack((r1,r2,r3,t1,t2,t3))
     	np.savetxt('motionParams.txt',p)
 
 	#clean up nifti directory
+	
 	cleanList = np.array(glob.glob('*'))
 	os.mkdir('raw')
 	os.mkdir('mcFiles')
@@ -112,3 +114,19 @@ if __name__ == "__main__":
 			os.rename(file, 'gems.nii.gz')
 		if file.startswith('t1'):
 			os.rename(file, 'mprage.nii.gz')
+
+	#calculate and display range of motion for each of the primary axes
+	#of rotation and translation - column order matches MCFLIRT output
+	#of pitch, roll, yaw, x, y, z
+	
+	mcDir = niftiDir + '/' + 'mcFiles'
+        os.chdir(mcDir)
+        data = np.loadtxt('motionParams.txt', unpack=True)
+        maxVals = np.amax(data, axis=1)
+        minVals = np.amin(data, axis=1)
+        rangeList = maxVals - minVals
+        print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+        print('Range of motion for ' + sessName + ':')
+        print(rangeList)
+        print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+	np.savetxt('rangeOfMotion.txt', rangeList)
