@@ -38,11 +38,10 @@ if __name__ == "__main__":
 			os.chdir(refDir)
 			RV = glob.glob('*0001.dcm')
 			str = ''.join(RV)
-			subprocess.check_call(['dcm2niix', '-g', 'N', '-s', 'Y', '-o', niftiDir, refDir + '/' + str])
+			subprocess.check_call(['dcm2niix', '-z', 'N', '-s', 'Y', '-f', 'refVol' '-o', niftiDir, refDir + '/' + str])
 			nii = glob.glob('*.nii*')
 			ref = ''.join(nii)
 			os.chdir(niftiDir)
-			os.rename('Y.nii', 'refVol.nii')
 
 	for scan in niftiList:
 		if scan.startswith('epi'):
@@ -96,7 +95,6 @@ if __name__ == "__main__":
     	ax2.set_ylabel('Rotation (rad)')
     	ax2.set_xlabel('Time (TR)')
     	fig.savefig(sessName + '_motionParams.png')
-    	os.system('open ' + sessName + '_motionParams.png')
     	p = np.column_stack((r1,r2,r3,t1,t2,t3))
     	np.savetxt('motionParams.txt',p)
 
@@ -125,8 +123,9 @@ if __name__ == "__main__":
         maxVals = np.amax(data, axis=1)
         minVals = np.amin(data, axis=1)
         rangeList = maxVals - minVals
-        print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+        print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
         print('Range of motion for ' + sessName + ':')
         print(rangeList)
-        print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+        print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 	np.savetxt('rangeOfMotion.txt', rangeList)
+	subprocess.call(['open', sessName + '_motionParams.png'])
