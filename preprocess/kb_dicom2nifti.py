@@ -39,7 +39,7 @@ if __name__ == "__main__":
 
 	for scan in dirList:
 		print("Converting dicom files in " + scan)
-		subprocess.check_call(['dcm2niix', '-f', scan, '-o', niftiDir, sessDir + '/' + scan])
+		subprocess.check_call(['dcm2niix', '-z', 'Y', '-f', scan, '-o', niftiDir, sessDir + '/' + scan])
 
 	#move files
 
