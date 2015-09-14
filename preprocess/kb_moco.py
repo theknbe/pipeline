@@ -108,9 +108,9 @@ if __name__ == "__main__":
 			subprocess.call(['mv', file, 'raw'])
 		if file.endswith(('.nii', '.par', '.png', '.txt')):
 			subprocess.call(['mv', file, 'mcFiles'])
-		if file.startswith('GEMS'):
+		if file.startswith('GEMS', 'gems'):
 			os.rename(file, 'gems.nii.gz')
-		if file.startswith('t1'):
+		if file.startswith('t1', 'mprage'):
 			os.rename(file, 'mprage.nii.gz')
 
 	#calculate and display range of motion for each of the primary axes
