@@ -26,14 +26,14 @@ if __name__ == "__main__":
 	#make some new directories
 
 	try:
-		os.mkdir(sessName+'_dicom')
-		os.mkdir(sessName+'_nifti')
+		os.mkdir('dicom')
+		os.mkdir('nifti')
 	except OSError as e:
 		if e.errno != errno.EEXIST:
 			raise e
 		pass
-	dicomDir = sessDir + '/' + sessName + '_dicom'
-	niftiDir = sessDir + '/' + sessName + '_nifti'
+	dicomDir = sessDir + '/' + 'dicom'
+	niftiDir = sessDir + '/' + 'nifti'
 
 	#convert dicoms to nifti
 

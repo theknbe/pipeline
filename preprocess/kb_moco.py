@@ -22,8 +22,8 @@ if __name__ == "__main__":
         if sessDir[-1]=='/':
                 sessDir=sessDir[:-1]
         sessName = os.path.split(sessDir)[1]
-	dicomDir = sessDir + '/' + sessName +'_dicom'
-	niftiDir = sessDir + '/' + sessName + '_nifti'
+	dicomDir = sessDir + '/' + 'dicom'
+	niftiDir = sessDir + '/' + 'nifti'
         os.chdir(niftiDir)
         niftiList = np.array(glob.glob('*'))
 
@@ -108,9 +108,9 @@ if __name__ == "__main__":
 			subprocess.call(['mv', file, 'raw'])
 		if file.endswith(('.nii', '.par', '.png', '.txt')):
 			subprocess.call(['mv', file, 'mcFiles'])
-		if file.startswith('GEMS', 'gems'):
+		if file.startswith('GEMS'):
 			os.rename(file, 'gems.nii.gz')
-		if file.startswith('t1', 'mprage'):
+		if file.startswith('t1'):
 			os.rename(file, 'mprage.nii.gz')
 
 	#calculate and display range of motion for each of the primary axes
