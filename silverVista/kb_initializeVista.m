@@ -12,44 +12,47 @@
 
 % user-defined parameters:
 subj = 'MG_050414';
+sessPath = sprintf('/Volumes/passportKB/DATA/%s', subj);
+
+% NOTE: you should also edit study-specific fields in the params struct like
+% annotations and scan groupings
 
 % set session path
-sess_path = sprintf('/Volumes/passportKB/DATA/%s', subj);
-cd(sess_path)
+cd(sessPath)
 
 % set-up functional and par files, inplane, and volume anatomy
-epi_list = dir(fullfile(sess_path, 'nifti','epi*'));
-for run = 1:numel(epi_list)
-    epi_file{run} = fullfile(sess_path, 'nifti', epi_list(run).name); 
-    assert(exist(epi_file{run}, 'file')>0);
+epiList = dir(fullfile(sessPath, 'nifti','epi*'));
+for run = 1:numel(epiList)
+    epiFile{run} = fullfile(sessPath, 'nifti', epiList(run).name); 
+    assert(exist(epiFile{run}, 'file')>0);
 end
 
-par_list = dir(fullfile(sess_path, 'Stimuli', 'Parfiles', '*par'));
-for par = 1:numel(par_list)
-    par_file{par} = fullfile(sess_path, 'Stimuli', 'Parfiles', par_list(par).name);
-    assert(exist(par_file{par}, 'file')>0);
+parList = dir(fullfile(sessPath, 'Stimuli', 'Parfiles', '*par'));
+for par = 1:numel(parList)
+    parFile{par} = fullfile(sessPath, 'Stimuli', 'Parfiles', parList(par).name);
+    assert(exist(parFile{par}, 'file')>0);
 end
 
 G = exist('nifti/gems.nii.gz');
 if G == 2
-    inplane_file = fullfile(sess_path, 'nifti','gems.nii.gz');
+    inplaneFile = fullfile(sessPath, 'nifti','gems.nii.gz');
 elseif G == 0
-    inplane_file = fullfile(sess_path, 'nifti','gems_avg_epi01_mcf.nii.gz');
+    inplaneFile = fullfile(sessPath, 'nifti','gems_avg_epi01_mcf.nii.gz');
 else
     disp('No inplane file found - try averaging the first EPI scan');
 end
-assert(exist(inplane_file, 'file')>0)
+assert(exist(inplaneFile, 'file')>0)
  
-anat_file = fullfile(sess_path, 'nifti', 'nu.nii.gz');
-assert(exist(anat_file, 'file')>0)
+anatFile = fullfile(sessPath, 'nifti', 'mprage.nii.gz');
+assert(exist(anatFile, 'file')>0)
 
 % create params struct and specify desired parameters 
 params = mrInitDefaultParams; 
-params.inplane = inplane_file; 
-params.functionals = epi_file; 
-params.vAnatomy = anat_file;
-params.parfile = par_file;
-params.sessionDir = sess_path;
+params.inplane = inplaneFile; 
+params.functionals = epiFile; 
+params.vAnatomy = anatFile;
+params.parfile = parFile;
+params.sessionDir = sessPath;
 params.subject = subj;
 params.annotations = {'localizer' 'plaid1' 'plaid2'};
 params.scanGroups = {[1], [2, 3]};
