@@ -20,7 +20,7 @@ export vol0=T1
 export projHome=/Volumes/passportKB/DATA/
 
 # run re-recon all to generate an automated segmentation of the cortical surface
-recon-all -i $projHome/$1/nifti/mprage.nii.gz -subjid $1 -all
+#recon-all -i $projHome/$1/nifti/mprage.nii.gz -subjid $1 -all
 
 # convert T1 to nifti
 mri_convert $SUBJECTS_DIR/$1/mri/$vol0.mgz t1.nii.gz
@@ -29,8 +29,8 @@ echo "done converting Freesurfer volume"
 
 # move nifti and ribbon to subject directory
 cd projHome/$1/nifti
-mv $FREESURFER_HOME/subjects/$1/mri/*.nii.gz .
-mv $FREESURFER_HOME/subjects/$1/mri/ribbon.mgz .
+mv $SUBJECTS_DIR/$1/mri/*.nii.gz .
+mv $SUBJECTS_DIR/subjects/$1/mri/ribbon.mgz .
 
 # open MATLAB
 cd ..
