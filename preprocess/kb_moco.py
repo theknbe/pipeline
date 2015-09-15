@@ -22,8 +22,8 @@ if __name__ == "__main__":
         if sessDir[-1]=='/':
                 sessDir=sessDir[:-1]
         sessName = os.path.split(sessDir)[1]
-	dicomDir = sessDir + '/' + sessName +'_dicom'
-	niftiDir = sessDir + '/' + sessName + '_nifti'
+	dicomDir = sessDir + '/' + 'dicom'
+	niftiDir = sessDir + '/' + 'nifti'
         os.chdir(niftiDir)
         niftiList = np.array(glob.glob('*'))
 
