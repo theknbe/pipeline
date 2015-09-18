@@ -1,6 +1,7 @@
 % kb_initializeVista.m
 % 
 % Kelly Byrne | 09.22.14
+% modified from code written by the Winawer lab and available at: https://wikis.nyu.edu/display/winawerlab/Initialize+data
 %
 % initiates an mrVista session for the given subject
 %
@@ -11,7 +12,7 @@
 % ________________________________________________________________________________________________
 
 % user-defined parameters:
-subj = 'MG_050414';
+subj = 'KB_091615';
 sessPath = sprintf('/Volumes/passportKB/DATA/%s', subj);
 
 % NOTE: you should also edit study-specific fields in the params struct like
@@ -43,15 +44,50 @@ else
 end
 assert(exist(inplaneFile, 'file')>0)
  
-anatFile = fullfile(sessPath, 'nifti', 'mprage.nii.gz');
+anatFile = fullfile(sessPath, 'nifti', 't1FS.nii.gz');
 assert(exist(anatFile, 'file')>0)
 
-% create params struct and specify desired parameters 
+% set analysis params for coherence
+for scan = 1:numel(epiList)
+    coParams{scan} = coParamsDefault;    
+        if scan == 1
+            coParams{scan}.nCycles = 31;
+        else
+            coParams{scan}.blockedAnalysis = 0;
+        end
+end
+
+% set analysis params for GLM
+for scan = 1:numel(epiList)
+    erParams{scan} = er_defaultParams;
+        if scan == 1
+            erParams{scan}.eventAnalysis = 1;
+            erParams{scan}.detrendFrames = 6;
+            erParams{scan}.glmHRF = 2; % SPM difference of gammas
+            erParams{scan}.onsetDelta = 3;  % frame offset for this scan (this should be negative if frames were clipped from
+                                            % scan start, and positive if extra frames were acquired)
+        elseif scan == 2
+            erParams{scan}.eventAnalysis = 1;
+            erParams{scan}.detrendFrames = 12;
+            erParams{scan}.glmHRF = 2; % SPM difference of gammas
+            erParams{scan}.onsetDelta = 2; % frame offset
+        elseif scan == 3
+            erParams{scan}.eventAnalysis = 1;
+            erParams{scan}.detrendFrames = 12;
+            erParams{scan}.glmHRF = 2; % SPM difference of gammas
+            erParams{scan}.onsetDelta = 3; % frame offset
+        end
+end
+
+% create general params struct and specify desired parameters 
 params = mrInitDefaultParams; 
 params.inplane = inplaneFile; 
 params.functionals = epiFile; 
 params.vAnatomy = anatFile;
 params.parfile = parFile;
+params.coParams = coParams;
+params.glmParams = erParams;
+%params.applyGlm = 1;
 params.sessionDir = sessPath;
 params.subject = subj;
 params.annotations = {'localizer' 'plaid1' 'plaid2'};

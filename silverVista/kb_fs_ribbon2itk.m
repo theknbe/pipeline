@@ -1,6 +1,9 @@
 function kb_fs_ribbon2itk(subjID, outfile, fillWithCSF, alignTo, resample_type, in_orientation)
 % Read in a freesurfer ribbon.mgz file and convert to a nifti class file
-% with our itkGray conventional labels.
+% with our itkGray conventional labels. 
+%
+% MODIFIED FROM ORIGINAL 2015.09.15 KB: changed default for fillWithCSF to true instead of false, default for 
+% resample type changed from weighted to nearest neighbor (bc input values come from a discrete set)
 %
 % fs_ribbon2itk(subjID, [outfile], [fillWithCSF], [alignTo], [resample_type])
 %
@@ -10,7 +13,7 @@ function kb_fs_ribbon2itk(subjID, outfile, fillWithCSF, alignTo, resample_type, 
 %   outfile:        name of output nifti segmentation file (including path)
 %                    [default = 't1_class.nii.gz']
 %   fillWithCSF:    if true, convert unlabeled voxels to CSF (0s => 1s)
-%                    [default = false]       
+%                    [default = true]       
 %   alignTo:        optional nifti file which determines bounding box and
 %                    alignment of output segmnentation
 %   resample_type:  resampling method for converting the ribbon file to a
@@ -79,8 +82,8 @@ if ~exist('subjID', 'var')
     return
 end
 
-if notDefined('fillWithCSF'),   fillWithCSF = false;        end
-if notDefined('resample_type'), resample_type= 'weighted';  end
+if notDefined('fillWithCSF'),   fillWithCSF = true;        end
+if notDefined('resample_type'), resample_type= 'nearest';  end
 
 
 %% Find paths
