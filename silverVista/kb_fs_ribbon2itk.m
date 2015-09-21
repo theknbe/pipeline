@@ -3,7 +3,9 @@ function kb_fs_ribbon2itk(subjID, outfile, fillWithCSF, alignTo, resample_type, 
 % with our itkGray conventional labels. 
 %
 % MODIFIED FROM ORIGINAL 2015.09.15 KB: changed default for fillWithCSF to true instead of false, default for 
-% resample type changed from weighted to nearest neighbor (bc input values come from a discrete set)
+% resample type changed from weighted to nearest neighbor (bc input values
+% come from a discrete set), and removed --out_orientation RAS parameter in
+% lines 131-138
 %
 % fs_ribbon2itk(subjID, [outfile], [fillWithCSF], [alignTo], [resample_type])
 %
@@ -119,7 +121,7 @@ if exist('alignTo', 'var')
     [~, ~, ext] = fileparts(alignTo);
     if strcmpi(ext, '.mgz'),
         newT1 = fullfile(fileparts(alignTo), 't1.nii.gz');
-        str = sprintf('!mri_convert --out_orientation RAS -rt %s %s %s', ...
+        str = sprintf('!mri_convert -rt %s %s %s', ...
             resample_type, alignTo, newT1);
         alignTo = newT1;
         eval(str)
@@ -127,11 +129,11 @@ if exist('alignTo', 'var')
 end
 
 if exist('alignTo', 'var') && exist('in_orientation','var'),
-    str = sprintf('!mri_convert  --in_orientation %s --out_orientation RAS --reslice_like %s -rt %s %s %s', in_orientation, alignTo, resample_type, ribbon, outfile);
+    str = sprintf('!mri_convert  --in_orientation %s --reslice_like %s -rt %s %s %s', in_orientation, alignTo, resample_type, ribbon, outfile);
 elseif exist('alignTo', 'var'),
-    str = sprintf('!mri_convert  --out_orientation RAS --reslice_like %s -rt %s %s %s', alignTo, resample_type, ribbon, outfile);
+    str = sprintf('!mri_convert  --reslice_like %s -rt %s %s %s', alignTo, resample_type, ribbon, outfile);
 else
-    str = sprintf('!mri_convert  --out_orientation RAS -rt %s %s %s', resample_type, ribbon, outfile);
+    str = sprintf('!mri_convert  -rt %s %s %s', resample_type, ribbon, outfile);
 end
 eval(str)
     
