@@ -33,7 +33,12 @@ export fillWithCSF=
 export alignTo=$niftiDir/t1FS.nii.gz
 export resampleType=
 /Applications/MATLAB_R2012b.app/bin/matlab -nosplash -nodesktop -r "try, kb_fs_ribbon2itk('$subjID', '$outFile', '$fillWithCSF', '$alignTo', '$resampleType'); catch; end; exit"
+echo " "
 echo "done converting t1 classification file: ribbon.mgz ---> t1Class.nii.gz"
-
-
-
+echo " "
+mkdir /Volumes/Plata2/MRS_amblyopia/newSegs/$1/
+mkdir /Volumes/Plata2/MRS_amblyopia/newSegs/$1/orig
+mkdir /Volumes/Plata2/MRS_amblyopia/newSegs/$1/manualEdits
+cp $projHome/$1/nifti/t1FS.nii.gz /Volumes/Plata2/MRS_amblyopia/newSegs/$1/orig
+cp $niftiDir/t1Class.nii.gz /Volumes/Plata2/MRS_amblyopia/newSegs/$1/orig
+echo "case files copied to Plata2 -- manual edits to the segmentation should be performed using ITKGray on Burrata (the windows workstation, currently in 582D)"
