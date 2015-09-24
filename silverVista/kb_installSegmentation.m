@@ -4,7 +4,7 @@ function kb_installSegmentation(query, keepAllNodes, filePaths, numGrayLayers)
 %
 % Rebuild coords after a new segmentation.
 %
-% MODIFIED FROM ORIGINAL 2015.09.20 KB: changed default for keepAllNodes to true instead of false, default for 
+% MODIFIED FROM ORIGINAL 2015.09.20 KB: changed default for 
 % number of gray layers set to 3
 %
 % Note: could automatically rebuild Gray/corAnals by xforming from inplane, but we
@@ -40,12 +40,12 @@ if ~exist('keepAllNodes','var'), keepAllNodes=1; end
 
 if notDefined('filePaths')
 	% get a set of file paths in a dialog
-	filePaths = segmentationFilesDialog;
+	filePaths = {'nifti/t1Class.nii.gz', 'nifti/t1Class.nii.gz'};
     if isempty(filePaths), return; end
 end
 
-if ~exist('numGrayLayers', 'var')
-    numGrayLayers = 3;
+%if ~exist('numGrayLayers', 'var')
+numGrayLayers = 3;
     %resp = inputdlg('number of gray layers?', 'enter a number', 1, {'3'});
     %numGrayLayers = str2double(resp);
 end

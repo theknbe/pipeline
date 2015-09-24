@@ -2,11 +2,9 @@
 #
 #Kelly Byrne | Silver Lab | UC Berkeley | 2015-09-14
 
-#kb_fsmgz2nii1.sh: calls Freesurfer's recon-all script to generate an automated segmentation of the cortical surface & begins
-#process to convert mgz files to nifti
+#kb_generateSeg.sh: calls Freesurfer's recon-all script to generate an automated segmentation of the cortical surface & converts
+#mgz files to nifti
 
-#intended for use with kb_fsmgz2nii2.m in MATLAB
-#projHome variable should be user-defined
 #required command-line argument: subject ID
 #usage example: kb_fsmgz2nii.sh KB_091415
 
