@@ -1,3 +1,8 @@
+% close open windows and open mrVista
+clear all;
+close all;
+mrVista;
+
 % install segmentation
 vw = initHiddenInplane;
 query = 0;
