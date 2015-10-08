@@ -14,6 +14,7 @@
 % user-defined parameters:
 subj = 'KB_091615';
 sessPath = sprintf('/Volumes/passportKB/DATA/%s', subj);
+keepFrames = [12 372; 12 372; 12 372];
 
 % NOTE: you should also modify study-specific file names/paths, and fields in the params struct like
 % coParams, glmParams, annotations, etc.
@@ -53,14 +54,80 @@ params.inplane = inplaneFile;
 params.functionals = epiFile; 
 params.vAnatomy = anatFile;
 params.parfile = parFile;
-%params.coParams = coParams;
-%params.glmParams = erParams;
-%params.applyGlm = 1;
-%params.applyCorAnal = [1,1]
+params.keepFrames = keepFrames;
 params.sessionDir = sessPath;
 params.subject = subj;
 params.annotations = {'localizer' 'plaid1' 'plaid2'};
 params.scanGroups = {[1], [2, 3]};
 
+% fix headers
+% localizer
+ni = readFileNifti('nifti/epi01_localizer_mcf.nii.gz');
+ni = niftiCheckQto(ni);
+ni.qform = 1;
+ni.sform = 1;
+ni.freq_dim = 1;
+ni.phase_dim = 2;
+ni.slice_dim = 3;
+ni.slice_end = 15; %(number of slices-1)
+ni.slice_duration = 0.0625; %(TR/#slices)
+writeFileNifti(ni);
+
+% plaids
+ni = readFileNifti('nifti/epi02_plaid1_mcf.nii.gz');
+ni = niftiCheckQto(ni);
+ni.qform = 1;
+ni.sform = 1;
+ni.freq_dim = 1;
+ni.phase_dim = 2;
+ni.slice_dim = 3;
+ni.slice_end = 15; %(number of slices-1)
+ni.slice_duration = 0.0625; %(TR/#slices)
+writeFileNifti(ni);
+
+ni = readFileNifti('nifti/epi03_plaid2_mcf.nii.gz');
+ni = niftiCheckQto(ni);
+ni.qform = 1;
+ni.sform = 1;
+ni.freq_dim = 1;
+ni.phase_dim = 2;
+ni.slice_dim = 3;
+ni.slice_end = 15; %(number of slices-1)
+ni.slice_duration = 0.0625; %(TR/#slices)
+writeFileNifti(ni);
+
+% gems
+if G == 2
+    ni = readFileNifti('nifti/gems.nii.gz');
+else
+    ni = readFileNifti('nifti/gems_avg_epi01_mcf.nii.gz');
+end
+ni = niftiCheckQto(ni);
+ni.qform = 1;
+ni.sform = 1;
+ni.freq_dim = 1;
+ni.phase_dim = 2;
+ni.slice_dim = 3;
+writeFileNifti(ni);
+
+% t1
+ni = readFileNifti('nifti/t1FS.nii.gz');
+ni = niftiCheckQto(ni);
+ni.qform = 1;
+ni.sform = 1;
+ni.freq_dim = 1;
+ni.phase_dim = 2;
+ni.slice_dim = 3;
+writeFileNifti(ni);
+
+% leave a log file
+fid = fopen('headersFixed.txt', 'at');
+fprintf(fid, datestr(now));
+fclose(fid);
+
 % initialize the session
 mrInit(params)
+
+% set vANATOMYPATH
+setVAnatomyPath(anatFile)
+
