@@ -1,14 +1,20 @@
 #!/bin/sh
 #
 #Kelly Byrne | Silver Lab | UC Berkeley | 2015-09-14
+#modified from code written by the Winawer lab and available at: https://wikis.nyu.edu/display/winawerlab/Freesurfer+autosegmentation
 
-#kb_generateSeg.sh: calls Freesurfer's recon-all script to generate an automated segmentation of the cortical surface & converts
+#requires the LCN's recon-all and mri_convert scripts, parts of the Freesurfer package available at: https://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall 
+#requires MATLAB version 2012b (feel free to try with other versions, but beware that I have not), info for Berkeley student licenses available at: https://software.berkeley.edu/MATLAB_FAQs#Acquire
+#requires kb_fs_ribbon2itk.m, included in this repository in the silverVista directory
+
+#kb_generateSeg.sh: calls recon-all to generate an automated segmentation of the cortical surface & converts
 #mgz files to nifti
 
 #required command-line argument: subject ID
 #usage example: kb_fsmgz2nii.sh KB_091415
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#NOTE: you should modify study-specific file names/paths
 
 export FREESURFER_HOME=/Applications/freesurfer
 source $FREESURFER_HOME/SetupFreeSurfer.sh
@@ -34,6 +40,9 @@ export resampleType=
 echo " "
 echo "done converting t1 classification file: ribbon.mgz ---> t1Class.nii.gz"
 echo " "
+
+# copy files to the server so they can be accessed from the windows workstation
+# NOTE: if your files are stored on the server (which they typically are) this section can be commented out
 mkdir /Volumes/Plata2/MRS_amblyopia/newSegs/$1/
 mkdir /Volumes/Plata2/MRS_amblyopia/newSegs/$1/orig
 mkdir /Volumes/Plata2/MRS_amblyopia/newSegs/$1/manualEdits
