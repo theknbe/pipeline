@@ -2,10 +2,13 @@
 
 #Kelly Byrne | Silver Lab | UC Berkeley | 2015-09-02	
 #modified from RD's dicom2vista.py | 2011-10-17
+
 #requires Chris Rorden's dcm2niix - available for OSX at: https://github.com/neurolabusc/dcm2niix/tree/master/osx_binary
 
 """kb_dicom2nifti.py: converts dicom images to nifti format and organizes resulting subdirectories
+
 required command-line argument: full path to the session directory
+
 usage example: kb_dicom2nifti.py /Volumes/server/myProject/subject001"""
 
 import os
