@@ -1,6 +1,6 @@
 % kb_initializeVista.m
 % 
-% Kelly Byrne | Silver Lab | UC Berkeley | 09.22.14
+% Kelly Byrne | Silver Lab | UC Berkeley | 2014-09-22
 % modified from code written by the Winawer lab and available at: https://wikis.nyu.edu/display/winawerlab/Initialize+data
 %
 % requires the VISTA Lab's Vistasoft package - available at: https://github.com/vistalab/vistasoft
