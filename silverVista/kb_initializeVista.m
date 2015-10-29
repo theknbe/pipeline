@@ -1,11 +1,11 @@
 % kb_initializeVista.m
 % 
-% Kelly Byrne | 09.22.14
+% Kelly Byrne | Silver Lab | UC Berkeley | 09.22.14
 % modified from code written by the Winawer lab and available at: https://wikis.nyu.edu/display/winawerlab/Initialize+data
 %
-% initiates an mrVista session for the given subject
+% requires the VISTA Lab's Vistasoft package - available at: https://github.com/vistalab/vistasoft
 %
-% run from subject parent directory
+% initiates an mrVista session for the given subject
 %
 % required input: user-defined parameters
 % desired output: mrInit2_params.mat, mrSESSION.mat, mrSESSION_backup.mat
@@ -14,10 +14,12 @@
 % user-defined parameters:
 subj = 'KB_091615';
 sessPath = sprintf('/Volumes/passportKB/DATA/%s', subj);
-keepFrames = [12 372; 12 372; 12 372];
+keepFrames = [12 372; 12 372; 12 372];  % each pair of numbers corresponds to one EPI, the first number indicates the first 
+                                        % frame of the scan to keep, the second number indicates the total to keep and will
+                                        % be the total number of frames in the clipped time series
 
 % NOTE: you should also modify study-specific file names/paths, and fields in the params struct like
-% coParams, glmParams, annotations, etc.
+% annotations, scanGroups etc.
 
 % set session path
 cd(sessPath)
@@ -129,5 +131,5 @@ fclose(fid);
 mrInit(params)
 
 % set vANATOMYPATH
-setVAnatomyPath(anatFile)
+setVAnatomyPath(anatFile);
 
