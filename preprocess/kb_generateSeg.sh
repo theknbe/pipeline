@@ -4,14 +4,14 @@
 #modified from code written by the Winawer lab and available at: https://wikis.nyu.edu/display/winawerlab/Freesurfer+autosegmentation
 
 #requires the LCN's recon-all and mri_convert scripts, parts of the Freesurfer package available at: https://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall 
-#requires MATLAB version 2012b (feel free to try with other versions, but beware that I have not), info for Berkeley student licenses available at: https://software.berkeley.edu/MATLAB_FAQs#Acquire
+#requires Mathworks' MATLAB version 2012b (feel free to try with other versions, but beware that I have not), info for Berkeley student licenses available at: https://software.berkeley.edu/MATLAB_FAQs#Acquire
 #requires kb_fs_ribbon2itk.m, included in this repository in the silverVista directory
 
 #kb_generateSeg.sh: calls recon-all to generate an automated segmentation of the cortical surface & converts
 #mgz files to nifti
 
 #required command-line argument: subject ID
-#usage example: kb_fsmgz2nii.sh KB_091415
+#usage example: kb_generateSeg.sh KB_091415
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #NOTE: you should modify study-specific file names/paths
