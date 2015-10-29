@@ -3,10 +3,15 @@
 #Kelly Byrne | Silver Lab | UC Berkeley | 2015-09-02
 #modified from RD's motioncorrect.py and motionparams.py | 2011-10-17
 
+#requires Chris Rorden's dcm2niix - available for OSX at: https://github.com/neurolabusc/dcm2niix/tree/master/osx_binary
+#requires FMRIB Analysis Group's MCFLIRT program, part of the FSL package - available at: http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation
+
 """kb_moco.py: calls MCFLIRT to perform motion correction on EPI scans, plots and stores resulting motion parameters. 
 uses the first volume of the first EPI scan as the reference volume [sound logic assuming that this volume was 
-acquired immediately after an inplane anatomical]. expects EPIs to be labeled epi01_description etc.
+acquired immediately after an inplane anatomical]. expects EPIs to be labeled epi01_description, epi02_description, etc.
+
 required command-line argument: full path to session directory 
+
 usage example: kb_moco.py /Volumes/server/myProject/subject001"""  
 
 import os
