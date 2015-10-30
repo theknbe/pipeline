@@ -2,13 +2,19 @@
 
 thorough instructions for utilizing the pipeline can be found on the Silver Lab wiki
 
-required dependencies (also listed separately for each step)
+required dependencies (also listed separately for each step):
+
 [Chris Rorden's dcm2niix tool](https://github.com/neurolabusc/dcm2niix/tree/master/osx_binary)
+
 [FMRIB Analysis Group's FSL package](http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation)
-*[The Laboratory for Computational Neuroimaging's Freesurfer package](https://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall)
-*[The VISTA Lab's ITKGray program](http://web.stanford.edu/group/vista/cgi-bin/wiki/index.php/ITKGray_Install)
-*[The VISTA Lab's vistasoft package](https://github.com/vistalab/vistasoft)
-*[Kendrick Kay's knkutils repository](https://github.com/kendrickkay/knkutils)
+
+[The Laboratory for Computational Neuroimaging's Freesurfer package](https://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall)
+
+[The VISTA Lab's ITKGray program](http://web.stanford.edu/group/vista/cgi-bin/wiki/index.php/ITKGray_Install)
+
+[The VISTA Lab's vistasoft package](https://github.com/vistalab/vistasoft)
+
+[Kendrick Kay's knkutils repository](https://github.com/kendrickkay/knkutils)
 
 step order/overview:
 1. **manual step** - review raw DICOM files and organize session directories 
