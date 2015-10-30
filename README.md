@@ -16,7 +16,7 @@ Required Dependencies:
 
 [Kendrick Kay's knkutils repository](https://github.com/kendrickkay/knkutils)
 
-step order/overview:
+Stepwise Overview:
 
 1. manual step - review raw DICOM files and organize session directories 
 2. kb_dicom2nifti.py - converts image files from DICOM to NIFTI format 
@@ -28,4 +28,6 @@ step order/overview:
 8. kb_alignInplaneToAnatomical.m - refines the manual alignment 
 9. kb_installSeg.m - installs an existing cortical segmentation into an existing mrSESSION 
 10. kb_macCreateMesh.m - builds and saves a smoothed and inflated mesh for the left and right hemispheres
+
+Once you've made it this far, you're ready to move on to analysis!
 
