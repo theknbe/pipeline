@@ -1,8 +1,8 @@
-#**imaging pipeline for the Silver Lab**
+##**Imaging Pipeline for the Silver Lab**
 
 Thorough instructions for utilizing the pipeline can be found on the Silver Lab wiki
 
-Required Dependencies:
+###Required Dependencies:
 
 [Chris Rorden's dcm2niix tool](https://github.com/neurolabusc/dcm2niix/tree/master/osx_binary)
 
@@ -16,7 +16,7 @@ Required Dependencies:
 
 [Kendrick Kay's knkutils repository](https://github.com/kendrickkay/knkutils)
 
-Stepwise Overview:
+###Stepwise Overview:
 
 1. manual step - review raw DICOM files and organize session directories 
 2. kb_dicom2nifti.py - converts image files from DICOM to NIFTI format 
