@@ -1,4 +1,4 @@
-kb's imaging pipeline for the silver lab
+#**imaging pipeline for the Silver Lab**
 
 thorough instructions for utilizing the pipeline can be found on the Silver Lab wiki
 
@@ -11,9 +11,9 @@ required dependencies (also listed separately for each step):
   *[Kendrick Kay's knkutils repository](https://github.com/kendrickkay/knkutils)
 
 step order/overview:
-1) **manual step** - review raw DICOM files and organize session directories 
+1. **manual step** - review raw DICOM files and organize session directories 
       *this will require a DICOM viewer, of which there are many (my personal recommendation is Pixmeo's Osirix)
-2) kb_dicom2nifti.py - converts image files from DICOM to NIFTI format 
+2. kb_dicom2nifti.py - converts image files from DICOM to NIFTI format 
       *required dependency - Chris Rorden's dcm2niix
 3) kb_moco.py - performs motion correction on EPI files, plots and stores motion parameters 
       *required dependencies - Chris Rorden's dcm2niix & FMRIB Analysis Group's FSL package
