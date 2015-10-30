@@ -21,8 +21,8 @@ Stepwise Overview:
 1. manual step - review raw DICOM files and organize session directories 
 2. kb_dicom2nifti.py - converts image files from DICOM to NIFTI format 
 3. kb_moco.py - performs motion correction on EPI files, plots and stores motion parameters 
-4. kb_generateSeg.sh - generates an automated segmentation of the cortical surface which is then converted to NIFTI format     
-5. manual step - the initial segmentation generated in the last step should be inspected for errors and manually edited, once finished it should be copied into the subject's NIFTI directory 
+4. kb_generateSeg.sh - generates an automated segmentation of the cortical surface and converts to NIFTI format     
+5. manual step - the initial segmentation should be inspected for errors and manually edited, then copied into the subject's NIFTI directory 
 6. kb_initializeVista.m - initiates an mrVista session 
 7. manual step - the inplane anatomical must be aligned to the high-resolution anatomical 
 8. kb_alignInplaneToAnatomical.m - refines the manual alignment 
