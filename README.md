@@ -24,8 +24,8 @@ Thorough instructions for utilizing the pipeline can be found on the Silver Lab 
 4. kb_generateSeg.sh - generates an automated segmentation of the cortical surface and converts to NIFTI format     
 5. manual step - the initial segmentation should be inspected for errors and manually edited, then copied into the subject's NIFTI directory 
 6. kb_initializeVista.m - initiates an mrVista session 
-7. manual step - the inplane anatomical must be aligned to the high-resolution anatomical 
-8. kb_alignInplaneToAnatomical.m - refines the manual alignment 
+7. manual step - align the inplane anatomical to the high-resolution anatomical 
+8. kb_alignInplaneToAnatomical.m - further refines the manual alignment 
 9. kb_installSeg.m - installs an existing cortical segmentation into an existing mrSESSION 
 10. kb_macCreateMesh.m - builds and saves a smoothed and inflated mesh for the left and right hemispheres
 
