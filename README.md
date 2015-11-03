@@ -2,6 +2,8 @@
 
 Thorough instructions for utilizing the pipeline can be found on the Silver Lab wiki
 
+NOTE: This pipeline has been implemented in MATLABR2012b running on OS X Yosemite Version 10.10.4
+
 ###Required Dependencies:
 
 [Chris Rorden's dcm2niix tool](https://github.com/neurolabusc/dcm2niix/tree/master/osx_binary)
