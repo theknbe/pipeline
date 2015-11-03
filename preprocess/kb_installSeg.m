@@ -11,15 +11,15 @@
 % desired output: open gray window (if the installation fails, the window will not open)
 % ________________________________________________________________________________________________
 
+% close any open windows and open mrVista
+clear all; close all;
+mrVista;
+
 % user-defined parameters:
 query = 0;
 keepAllNodes = 0;
 filePaths = {'nifti/t1Class.nii.gz'}; %path from working directory to the classification file
 numGrayLayers = 3;
-
-% close any open windows and open mrVista
-clear all; close all;
-mrVista;
 
 % install segmentation
 vw = initHiddenInplane;
