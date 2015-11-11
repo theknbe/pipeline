@@ -11,59 +11,53 @@
 
 % user-defined parameters:
 projHome = sprintf('/Volumes/passportKB/DATA');
-subj = sprintf('KB_091615');
+subj = sprintf('JM_092914');
+sessPath = sprintf('%s/%s', projHome, subj);
 
 % open a connection to the mesh server
 % GUI will appear asking to allow incoming connections, this is OK - allow it!
 % to stop the GUI from appearing, add a signature to the mrMeshMac application and server executable
 % see the website below (specifically answers 2 & 3) for helpful information about this process 
 % http://apple.stackexchange.com/questions/3271/how-to-get-rid-of-firewall-accept-incoming-connections-dialog
+cd(sessPath)
 close all;
 mrmStart(1,'localhost');
 
-% build left hemisphere mesh
+% build and inflate left hemisphere mesh
+% 3 GUIs will appear - the first is the build parameters, you can accept the default values. the second should ask for 
+% confirmation that the appropriate class file was found. the third will ask you to save the pial surface for the
+% hemisphere you're working on, our naming convention is lh_pial for the left hemisphere 
+open3ViewWindow('gray')
 fName = fullfile(projHome, filesep, subj, 'nifti/t1Class.nii.gz');
-msh = meshBuildFromNiftiClass(fName, 'left');
-msh = meshSmooth(msh);
-msh = meshColor(msh);
+VOLUME{1} = meshBuild(VOLUME{1}, 'left');  
+MSH = meshVisualize( viewGet(VOLUME{1}, 'Mesh') );  
+MSH = meshSet(MSH,'smooth_iterations',600);
+MSH = meshSet(MSH,'smooth_relaxation',0.5);
+MSH = meshSet(MSH,'smooth_sinc_method',0);
+MSH = meshSmooth(MSH);
+MSH = meshColor(MSH);
+filename='nifti/lh_inflated.mat';
+verbose=1;
+mrmWriteMeshFile(MSH, filename, verbose)
 
-save lh_pial.mat msh
-clear msh
-
-% build right hemisphere mesh 
+% build and inflate right hemisphere mesh
+% 3 GUIs will appear - the first is the build parameters, you can accept the default values. the second should ask for 
+% confirmation that the appropriate class file was found. the third will ask you to save the pial surface for the
+% hemisphere you're working on, our naming convention is rh_pial for the right hemisphere 
+open3ViewWindow('gray')
 fName = fullfile(projHome, filesep, subj, 'nifti/t1Class.nii.gz');
-msh = meshBuildFromNiftiClass(fName, 'right');
-msh = meshSmooth(msh);
-msh = meshColor(msh);
-
-save rh_pial.mat msh
-clear msh
-
-% inflate and display LH
-load lh_pial.mat
-msh = meshSet(msh,'smooth_iterations',600);
-msh = meshSet(msh,'smooth_relaxation',0.5);
-msh = meshSet(msh,'smooth_sinc_method',0);
-msh = meshSmooth(msh);
-
-save lh_inflated.mat msh
-clear msh
-
-% inflate and display RH
-load rh_pial.mat
-msh = meshSet(msh,'smooth_iterations',600);
-msh = meshSet(msh,'smooth_relaxation',0.5);
-msh = meshSet(msh,'smooth_sinc_method',0);
-msh = meshSmooth(msh);
-
-save rh_inflated.mat msh
-clear msh
+VOLUME{2} = meshBuild(VOLUME{2}, 'right');  MSH = meshVisualize( viewGet(VOLUME{2}, 'Mesh') );  
+MSH = meshSet(MSH,'smooth_iterations',600);
+MSH = meshSet(MSH,'smooth_relaxation',0.5);
+MSH = meshSet(MSH,'smooth_sinc_method',0);
+MSH = meshSmooth(MSH);
+MSH = meshColor(MSH);
+filename='nifti/rh_inflated.mat';
+mrmWriteMeshFile(MSH, filename, verbose)
 
 % close windows and connection to the mesh server
 mrmCloseWindow(1001,'localhost');
 mrmCloseWindow(1003,'localhost');
-mrmCloseWindow(1005,'localhost');
-mrmCloseWindow(1007,'localhost');
 PATH = getenv('PATH');
 setenv('PATH', [PATH ':/usr/local/bin']);
 unix('kb_mrmClose.sh');
