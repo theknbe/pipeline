@@ -20,6 +20,7 @@ sessPath = sprintf('%s/%s', projHome, subj);
 % see the website below (specifically answers 2 & 3) for helpful information about this process 
 % http://apple.stackexchange.com/questions/3271/how-to-get-rid-of-firewall-accept-incoming-connections-dialog
 cd(sessPath)
+mkdir('mesh')
 close all;
 mrmStart(1,'localhost');
 
@@ -28,7 +29,6 @@ mrmStart(1,'localhost');
 % confirmation that the appropriate class file was found. the third will ask you to save the pial surface for the
 % hemisphere you're working on, our naming convention is lh_pial for the left hemisphere 
 open3ViewWindow('gray')
-fName = fullfile(projHome, filesep, subj, 'nifti/t1Class.nii.gz');
 VOLUME{1} = meshBuild(VOLUME{1}, 'left');  
 MSH = meshVisualize( viewGet(VOLUME{1}, 'Mesh') );  
 MSH = meshSet(MSH,'smooth_iterations',600);
@@ -36,7 +36,7 @@ MSH = meshSet(MSH,'smooth_relaxation',0.5);
 MSH = meshSet(MSH,'smooth_sinc_method',0);
 VOLUME{1} = viewSet( VOLUME{1}, 'Mesh', meshSmooth( viewGet(VOLUME{1}, 'Mesh')) )
 MSH = meshColor(MSH);
-filename='nifti/lh_inflated.mat';
+filename=fullfile(projHome, filesep, subj, 'mesh/lh_inflated.mat');
 verbose=1;
 mrmWriteMeshFile(MSH, filename, verbose)
 
@@ -45,14 +45,13 @@ mrmWriteMeshFile(MSH, filename, verbose)
 % confirmation that the appropriate class file was found. the third will ask you to save the pial surface for the
 % hemisphere you're working on, our naming convention is rh_pial for the right hemisphere 
 open3ViewWindow('gray')
-fName = fullfile(projHome, filesep, subj, 'nifti/t1Class.nii.gz');
 VOLUME{2} = meshBuild(VOLUME{2}, 'right');  MSH = meshVisualize( viewGet(VOLUME{2}, 'Mesh') );  
 MSH = meshSet(MSH,'smooth_iterations',600);
 MSH = meshSet(MSH,'smooth_relaxation',0.5);
 MSH = meshSet(MSH,'smooth_sinc_method',0);
 VOLUME{2} = viewSet( VOLUME{2}, 'Mesh', meshSmooth( viewGet(VOLUME{2}, 'Mesh')) )
 MSH = meshColor(MSH);
-filename='nifti/rh_inflated.mat';
+filename=fullfile(projHome, filesep, subj, 'mesh/rh_inflated.mat')
 mrmWriteMeshFile(MSH, filename, verbose)
 
 % close windows and connection to the mesh server
