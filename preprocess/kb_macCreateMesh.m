@@ -34,7 +34,7 @@ MSH = meshVisualize( viewGet(VOLUME{1}, 'Mesh') );
 MSH = meshSet(MSH,'smooth_iterations',600);
 MSH = meshSet(MSH,'smooth_relaxation',0.5);
 MSH = meshSet(MSH,'smooth_sinc_method',0);
-MSH = meshSmooth(MSH);
+VOLUME{1} = viewSet( VOLUME{1}, 'Mesh', meshSmooth( viewGet(VOLUME{1}, 'Mesh')) )
 MSH = meshColor(MSH);
 filename='nifti/lh_inflated.mat';
 verbose=1;
@@ -50,7 +50,7 @@ VOLUME{2} = meshBuild(VOLUME{2}, 'right');  MSH = meshVisualize( viewGet(VOLUME{
 MSH = meshSet(MSH,'smooth_iterations',600);
 MSH = meshSet(MSH,'smooth_relaxation',0.5);
 MSH = meshSet(MSH,'smooth_sinc_method',0);
-MSH = meshSmooth(MSH);
+VOLUME{2} = viewSet( VOLUME{2}, 'Mesh', meshSmooth( viewGet(VOLUME{2}, 'Mesh')) )
 MSH = meshColor(MSH);
 filename='nifti/rh_inflated.mat';
 mrmWriteMeshFile(MSH, filename, verbose)
@@ -58,6 +58,8 @@ mrmWriteMeshFile(MSH, filename, verbose)
 % close windows and connection to the mesh server
 mrmCloseWindow(1001,'localhost');
 mrmCloseWindow(1003,'localhost');
+mrmCloseWindow(1005,'localhost');
+mrmCloseWindow(1007,'localhost');
 PATH = getenv('PATH');
 setenv('PATH', [PATH ':/usr/local/bin']);
 unix('kb_mrmClose.sh');
