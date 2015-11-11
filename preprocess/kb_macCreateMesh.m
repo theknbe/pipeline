@@ -11,7 +11,7 @@
 
 % user-defined parameters:
 projHome = sprintf('/Volumes/passportKB/DATA');
-subj = sprintf('JM_092914');
+subj = sprintf('AI_032814');
 sessPath = sprintf('%s/%s', projHome, subj);
 
 % open a connection to the mesh server
@@ -25,36 +25,35 @@ close all;
 mrmStart(1,'localhost');
 
 % build and inflate left hemisphere mesh
-% 3 GUIs will appear - the first is the build parameters, you can accept the default values. the second should ask for 
+% 4 GUIs will appear - the first is the build parameters, you can accept the default values. the second should ask for 
 % confirmation that the appropriate class file was found. the third will ask you to save the pial surface for the
-% hemisphere you're working on, our naming convention is lh_pial for the left hemisphere 
+% hemisphere you're working on, our naming convention is lh_pial for the left hemisphere (should be saved in mesh
+% directory). the fourth asks for smoothing parameters - try 600 iterations
 open3ViewWindow('gray')
 VOLUME{1} = meshBuild(VOLUME{1}, 'left');  
 MSH = meshVisualize( viewGet(VOLUME{1}, 'Mesh') );  
-MSH = meshSet(MSH,'smooth_iterations',600);
-MSH = meshSet(MSH,'smooth_relaxation',0.5);
-MSH = meshSet(MSH,'smooth_sinc_method',0);
-VOLUME{1} = viewSet( VOLUME{1}, 'Mesh', meshSmooth( viewGet(VOLUME{1}, 'Mesh')) )
+VOLUME{1} = viewSet( VOLUME{1}, 'Mesh', meshSmooth( viewGet(VOLUME{1}, 'Mesh'),1) ); 
 MSH = meshColor(MSH);
+MSH = meshVisualize( viewGet(VOLUME{1}, 'Mesh') );
 filename=fullfile(projHome, filesep, subj, 'mesh/lh_inflated.mat');
 verbose=1;
 mrmWriteMeshFile(MSH, filename, verbose)
 
 % build and inflate right hemisphere mesh
-% 3 GUIs will appear - the first is the build parameters, you can accept the default values. the second should ask for 
+% 4 GUIs will appear - the first is the build parameters, you can accept the default values. the second should ask for 
 % confirmation that the appropriate class file was found. the third will ask you to save the pial surface for the
-% hemisphere you're working on, our naming convention is rh_pial for the right hemisphere 
+% hemisphere you're working on, our naming convention is rh_pial for the right hemisphere (should be saved in mesh
+% directory). the fourth asks for smoothing parameters - try 600 iterations
 open3ViewWindow('gray')
 VOLUME{2} = meshBuild(VOLUME{2}, 'right');  MSH = meshVisualize( viewGet(VOLUME{2}, 'Mesh') );  
-MSH = meshSet(MSH,'smooth_iterations',600);
-MSH = meshSet(MSH,'smooth_relaxation',0.5);
-MSH = meshSet(MSH,'smooth_sinc_method',0);
-VOLUME{2} = viewSet( VOLUME{2}, 'Mesh', meshSmooth( viewGet(VOLUME{2}, 'Mesh')) )
+VOLUME{2} = viewSet( VOLUME{2}, 'Mesh', meshSmooth( viewGet(VOLUME{2}, 'Mesh'),1) )
 MSH = meshColor(MSH);
+MSH = meshVisualize( viewGet(VOLUME{2}, 'Mesh') );
 filename=fullfile(projHome, filesep, subj, 'mesh/rh_inflated.mat')
 mrmWriteMeshFile(MSH, filename, verbose)
 
 % close windows and connection to the mesh server
+close all;
 mrmCloseWindow(1001,'localhost');
 mrmCloseWindow(1003,'localhost');
 mrmCloseWindow(1005,'localhost');
